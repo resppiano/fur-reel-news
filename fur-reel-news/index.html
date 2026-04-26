@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fur-Reel News — The Daily Bark, Mew &amp; Markets</title>
+<meta name="description" content="The only news show anchored entirely by pets. Weeknights. Tail-wagging journalism with Dan Retriever and Allison Catpur." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,400;1,9..144,600;1,9..144,800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --news-navy: #0a1638;
+    --news-navy-deep: #050a20;
+    --news-blue: #1862ff;
+    --news-blue-bright: #2d7bff;
+    --news-gold: #f5b51c;
+    --news-gold-deep: #d99005;
+    --news-red: #e8132a;
+    --news-red-glow: #ff2d42;
+    --news-cream: #f6efe2;
+    --news-paper: #ece2cb;
+    --news-ink: #0e0e12;
+    --news-graphite: #2a2d3a;
+
+    --font-display: "Bebas Neue", "Impact", sans-serif;
+    --font-editorial: "Fraunces", "Times New Roman", serif;
+    --font-body: "DM Sans", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--news-navy-deep);
+    color: var(--news-cream);
+    font-family: var(--font-body);
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ==========  GRAIN + SCANLINE OVERLAY  ========== */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none; z-index: 1000;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.018) 0px,
+        rgba(255,255,255,0.018) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+    mix-blend-mode: overlay;
+  }
+
+  /* ==========  TICKER  ========== */
+  .ticker {
+    position: sticky; top: 0; z-index: 900;
+    background: var(--news-red);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #000;
+    display: flex; align-items: center;
+    height: 38px;
+    overflow: hidden;
+  }
+  .ticker-label {
+    background: #000; color: #fff;
+    padding: 0 1rem;
+    height: 100%;
+    display: flex; align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+    border-right: 2px solid var(--news-gold);
+  }
+  .ticker-label .live-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--news-red-glow);
+    animation: pulse 1.2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 var(--news-red-glow); }
+    50% { opacity: 0.6; transform: scale(1.2); box-shadow: 0 0 0 6px rgba(255,45,66,0); }
+  }
+  .ticker-track-wrap { flex: 1; overflow: hidden; position: relative; }
+  .ticker-track {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: ticker-scroll 60s linear infinite;
+    padding-left: 100%;
+  }
+  .ticker-track span {
+    padding: 0 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.35);
+  }
+  .ticker-track span::before {
+    content: "● ";
+    color: var(--news-gold);
+    margin-right: 0.4rem;
+  }
+  @keyframes ticker-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+
+  /* ==========  TOP NAV  ========== */
+  .topnav {
+    background: linear-gradient(180deg, #000 0%, var(--news-navy-deep) 100%);
+    border-bottom: 1px solid rgba(245,181,28,0.25);
+    padding: 1.1rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+  }
+  .topnav::after {
+    content: "";
+    position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--news-gold), var(--news-blue), var(--news-gold), transparent);
+  }
+  .logo {
+    display: flex; align-items: center; gap: 0.7rem;
+    flex-shrink: 0;
+  }
+  .logo-mark {
+    width: 46px; height: 46px;
+    background: var(--news-gold);
+    color: var(--news-navy-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    transform: skew(-8deg);
+    box-shadow: 4px 4px 0 var(--news-blue);
+  }
+  .logo-mark span { transform: skew(8deg); }
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+  }
+  .logo-text .a { color: var(--news-gold); }
+  .logo-text .b { color: var(--news-cream); display: block; font-size: 0.78rem; letter-spacing: 0.18em; }
+
+  .nav-links {
+    display: flex; gap: 0.4rem; list-style: none;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+  }
+  .nav-links a {
+    padding: 0.55rem 1rem;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .nav-links a:hover {
+    color: var(--news-gold);
+  }
+  .nav-links a:hover::after {
+    content: ""; position: absolute;
+    bottom: 0; left: 1rem; right: 1rem;
+    height: 2px; background: var(--news-gold);
+  }
+
+  .nav-cta {
+    background: var(--news-red);
+    color: #fff;
+    font-family: var(--font-display);
+    letter-spacing: 0.08em;
+    font-size: 1rem;
+    padding: 0.7rem 1.4rem;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; gap: 0.6rem;
+    transform: skew(-8deg);
+    box-shadow: 3px 3px 0 #000;
+    transition: transform 0.15s;
+  }
+  .nav-cta:hover { transform: skew(-8deg) translate(-2px, -2px); box-shadow: 5px 5px 0 #000; }
+  .nav-cta > * { transform: skew(8deg); }
+
+  .menu-toggle { display: none; background: none; border: 2px solid var(--news-gold); color: var(--news-gold); padding: 0.5rem 0.8rem; font-family: var(--font-display); cursor: pointer; }
+
+  /* ==========  HERO  ========== */
+  .hero {
+    position: relative;
+    min-height: 88vh;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 3rem;
+    padding: 5rem 4rem 4rem;
+    align-items: center;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 80% 30%, rgba(24,98,255,0.25), transparent 60%),
+      radial-gradient(ellipse at 20% 90%, rgba(245,181,28,0.12), transparent 55%),
+      var(--news-navy-deep);
+  }
+  .hero::before {
+    content: "FUR";
+    position: absolute;
+    top: -3rem; right: -2rem;
+    font-family: var(--font-display);
+    font-size: 28rem;
+    line-height: 0.85;
+    color: rgba(245,181,28,0.04);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-content { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: rgba(232,19,42,0.12);
+    border: 1px solid var(--news-red);
+    padding: 0.4rem 0.9rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.18em;
+    color: var(--news-red-glow);
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow .live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--news-red-glow); animation: pulse 1.2s infinite; }
+
+  .hero h1 {
+    font-family: var(--font-editorial);
+    font-weight: 900;
+    font-size: clamp(2.6rem, 5.8vw, 5.4rem);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--news-cream);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--news-gold);
+    font-weight: 600;
+  }
+  .hero h1 .underline {
+    display: inline-block;
+    position: relative;
+  }
+  .hero h1 .underline::after {
+    content: "";
+    position: absolute;
+    bottom: 0.05em; left: -2%;
+    width: 104%; height: 0.18em;
+    background: var(--news-blue);
+    z-index: -1;
+    transform: skew(-12deg);
+  }
+
+  .hero p.lede {
+    font-size: 1.18rem;
+    color: rgba(246,239,226,0.78);
+    max-width: 540px;
+    margin-bottom: 2.2rem;
+    font-family: var(--font-editorial);
+    font-weight: 400;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary, .btn-secondary {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+    padding: 1rem 1.8rem;
+    cursor: pointer; border: none;
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--news-gold);
+    color: var(--news-navy-deep);
+    box-shadow: 5px 5px 0 var(--news-blue);
+  }
+  .btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--news-blue); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--news-cream);
+    border: 2px solid var(--news-cream);
+  }
+  .btn-secondary:hover { background: var(--news-cream); color: var(--news-navy-deep); }
+
+  .hero-meta {
+    margin-top: 2.5rem;
+    display: flex; gap: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: rgba(246,239,226,0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  .hero-meta strong { display: block; color: var(--news-gold); font-size: 1.2rem; font-family: var(--font-display); letter-spacing: 0.05em; margin-top: 0.2rem; }
+
+  /* hero image card */
+  .hero-screen {
+    position: relative; z-index: 2;
+    aspect-ratio: 16/10;
+    background: #000;
+    border: 1px solid rgba(245,181,28,0.4);
+    box-shadow:
+      0 0 0 1px var(--news-blue),
+      0 30px 60px rgba(0,0,0,0.6),
+      inset 0 0 0 8px #000;
+    overflow: hidden;
+  }
+  .hero-screen img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: saturate(1.05) contrast(1.05);
+  }
+  .hero-screen .corner-tag {
+    position: absolute; top: 1rem; left: 1rem;
+    background: var(--news-red);
+    color: #fff;
+    padding: 0.4rem 0.8rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    z-index: 3;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .hero-screen .corner-tag .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: pulse 1.2s infinite; }
+  .hero-screen .lower-third {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.85));
+    padding: 1.5rem 1.2rem 1rem;
+    z-index: 3;
+  }
+  .hero-screen .lower-third .station {
+    font-family: var(--font-display); color: var(--news-gold);
+    letter-spacing: 0.12em; font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+  .hero-screen .lower-third .headline {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #fff;
+    line-height: 1.15;
+  }
+
+  .hero-screen-frame-time {
+    position: absolute; top: 1rem; right: 1rem;
+    font-family: var(--font-mono);
+    color: var(--news-cream);
+    font-size: 0.78rem;
+    background: rgba(0,0,0,0.65);
+    padding: 0.35rem 0.6rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    z-index: 3;
+  }
+
+  /* ==========  TONIGHT'S RUNDOWN STRIP  ========== */
+  .rundown-strip {
+    background: var(--news-gold);
+    color: var(--news-navy-deep);
+    padding: 1.3rem 4rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    border-top: 3px solid #000;
+    border-bottom: 3px solid #000;
+    overflow: hidden;
+    position: relative;
+  }
+  .rundown-strip::before, .rundown-strip::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 60px;
+    pointer-events: none;
+  }
+  .rundown-strip::before { left: 0; background: linear-gradient(90deg, var(--news-gold), transparent); }
+  .rundown-strip::after { right: 0; background: linear-gradient(-90deg, var(--news-gold), transparent); }
+  .rundown-label {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+    background: var(--news-navy-deep);
+    color: var(--news-gold);
+    padding: 0.35rem 1rem;
+    transform: skew(-8deg);
+  }
+  .rundown-label > * { display: inline-block; transform: skew(8deg); }
+  .rundown-items {
+    display: flex; gap: 3rem;
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: 1.05rem;
+    font-weight: 600;
+    white-space: nowrap;
+    animation: marquee 40s linear infinite;
+  }
+  .rundown-items span::before {
+    content: "→ ";
+    font-style: normal;
+    color: var(--news-red);
+    margin-right: 0.3rem;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ==========  SECTION COMMON  ========== */
+  section { padding: 6rem 4rem; }
+  .section-eyebrow {
+    font-family: var(--font-display);
+    color: var(--news-gold);
+    letter-spacing: 0.2em;
+    font-size: 0.95rem;
+    margin-bottom: 0.9rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .section-eyebrow::before {
+    content: ""; display: inline-block;
+    width: 30px; height: 2px;
+    background: var(--news-gold);
+  }
+  .section-title {
+    font-family: var(--font-editorial);
+    font-weight: 800;
+    font-size: clamp(2rem, 4.2vw, 3.6rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: var(--news-cream);
+  }
+  .section-title em { font-style: italic; color: var(--news-gold); font-weight: 600; }
+  .section-sub {
+    color: rgba(246,239,226,0.65);
+    font-size: 1.05rem;
+    max-width: 650px;
+    margin-bottom: 3.5rem;
+    font-family: var(--font-editorial);
+  }
+
+  /* ==========  ANCHORS  ========== */
+  .anchors {
+    background:
+      linear-gradient(180deg, var(--news-navy-deep), var(--news-navy)),
+      var(--news-navy-deep);
+    position: relative;
+  }
+  .anchors-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+  .anchor-card {
+    background: linear-gradient(160deg, #0e1d44 0%, #050a20 100%);
+    border: 1px solid rgba(245,181,28,0.2);
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s;
+  }
+  .anchor-card:hover { transform: translateY(-6px); }
+  .anchor-card::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--news-blue), var(--news-gold));
+  }
+  .anchor-photo {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+  }
+  .anchor-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .anchor-photo::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(5,10,32,0.95));
+  }
+
+  .anchor-id {
+    position: absolute;
+    bottom: 1rem; left: 1rem; right: 1rem;
+    z-index: 2;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1rem;
+  }
+  .anchor-id .name {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+  }
+  .anchor-id .role {
+    color: var(--news-gold);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    margin-top: 0.4rem;
+  }
+  .anchor-id .badge {
+    background: var(--news-red); color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    letter-spacing: 0.12em;
+    transform: skew(-8deg);
+    flex-shrink: 0;
+  }
+  .anchor-id .badge > * { display: inline-block; transform: skew(8deg); }
+
+  .anchor-body { padding: 2rem 1.8rem; }
+  .anchor-quote {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--news-cream);
+    border-left: 3px solid var(--news-gold);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+  .anchor-bio {
+    color: rgba(246,239,226,0.7);
+    font-size: 0.96rem;
+    margin-bottom: 1.8rem;
+  }
+  .anchor-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    border-top: 1px solid rgba(245,181,28,0.18);
+    padding-top: 1.4rem;
+  }
+  .anchor-stats div {
+    text-align: left;
+  }
+  .anchor-stats .label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: rgba(246,239,226,0.4);
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+  .anchor-stats .val {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--news-gold);
+    line-height: 1;
+  }
+
+  /* ==========  EPISODES  ========== */
+  .episodes { background: var(--news-paper); color: var(--news-ink); }
+  .episodes .section-title { color: var(--news-ink); }
+  .episodes .section-title em { color: var(--news-red); }
+  .episodes .section-sub { color: rgba(14,14,18,0.65); }
+  .episodes .section-eyebrow { color: var(--news-red); }
+  .episodes .section-eyebrow::before { background: var(--news-red); }
+
+  .episode-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+    gap: 1.8rem;
+  }
+  .episode-card {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex; flex-direction: column;
+  }
+  .episode-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -10px rgba(10,22,56,0.25);
+  }
+  .episode-card.featured { grid-row: span 2; }
+
+  .episode-thumb {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    position: relative;
+    background: #000;
+  }
+  .episode-card.featured .episode-thumb { aspect-ratio: 16/9; }
+  .episode-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .episode-card:hover .episode-thumb img { transform: scale(1.04); }
+  .episode-thumb::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.7));
+    z-index: 1;
+  }
+  .play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: var(--news-red);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+    box-shadow: 0 0 0 0 rgba(232,19,42,0.6);
+    transition: all 0.3s;
+  }
+  .episode-card:hover .play-btn {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 0 12px rgba(232,19,42,0);
+  }
+  .play-btn svg { width: 24px; height: 24px; margin-left: 4px; }
+
+  .episode-tag {
+    position: absolute;
+    top: 1rem; left: 1rem;
+    background: #000; color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    padding: 0.3rem 0.7rem;
+    z-index: 3;
+  }
+  .episode-tag.live { background: var(--news-red); }
+
+  .episode-meta {
+    position: absolute;
+    bottom: 1rem; left: 1rem; right: 1rem;
+    z-index: 2;
+    display: flex; justify-content: space-between;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .episode-body {
+    padding: 1.4rem;
+    display: flex; flex-direction: column;
+    flex: 1;
+  }
+  .episode-card.featured .episode-body { padding: 2rem; }
+  .episode-cat {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--news-red);
+    margin-bottom: 0.6rem;
+  }
+  .episode-title {
+    font-family: var(--font-editorial);
+    font-weight: 800;
+    font-size: 1.3rem;
+    line-height: 1.15;
+    color: var(--news-ink);
+    margin-bottom: 0.7rem;
+    letter-spacing: -0.01em;
+  }
+  .episode-card.featured .episode-title { font-size: 2rem; }
+  .episode-desc {
+    color: rgba(14,14,18,0.6);
+    font-size: 0.95rem;
+    margin-bottom: 1.1rem;
+    flex: 1;
+  }
+  .episode-foot {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: rgba(14,14,18,0.5);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .episode-foot .runtime { color: var(--news-navy); font-weight: 700; }
+
+  /* ==========  BEHIND THE STUDIO  ========== */
+  .studio {
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(24,98,255,0.18), transparent 60%),
+      var(--news-navy-deep);
+    position: relative;
+  }
+
+  .studio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+  }
+  .studio-tile {
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 4/3;
+    border: 1px solid rgba(245,181,28,0.15);
+  }
+  .studio-tile.tall { grid-row: span 2; aspect-ratio: 1/1.55; }
+  .studio-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+  .studio-tile:hover img { transform: scale(1.06); }
+  .studio-tile::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(5,10,32,0.92));
+    pointer-events: none;
+  }
+  .studio-tile .caption {
+    position: absolute;
+    bottom: 1rem; left: 1.2rem; right: 1.2rem;
+    z-index: 2;
+    color: #fff;
+  }
+  .studio-tile .caption .num {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--news-gold);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.3rem;
+  }
+  .studio-tile .caption .title {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+
+  .studio-intro {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: end;
+    margin-bottom: 3.5rem;
+  }
+  .studio-callout {
+    border-left: 3px solid var(--news-gold);
+    padding-left: 1.4rem;
+    color: rgba(246,239,226,0.78);
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+
+  /* ==========  NEWSLETTER  ========== */
+  .newsletter {
+    background:
+      linear-gradient(135deg, var(--news-blue) 0%, #0d3aa8 100%);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .newsletter::before {
+    content: "MAIL";
+    position: absolute; top: -3rem; right: -2rem;
+    font-family: var(--font-display);
+    font-size: 24rem; line-height: 0.85;
+    color: rgba(255,255,255,0.05);
+    pointer-events: none;
+  }
+  .newsletter-inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    position: relative; z-index: 2;
+  }
+  .newsletter h2 {
+    font-family: var(--font-editorial);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+  }
+  .newsletter h2 em { color: var(--news-gold); font-style: italic; font-weight: 600; }
+  .newsletter p {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.85);
+    max-width: 500px;
+    font-family: var(--font-editorial);
+  }
+  .newsletter form {
+    background: var(--news-navy-deep);
+    padding: 2rem;
+    border: 1px solid rgba(245,181,28,0.25);
+    box-shadow: 8px 8px 0 var(--news-gold);
+  }
+  .form-row { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+  .form-row label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--news-gold);
+    text-transform: uppercase;
+  }
+  .form-row input,
+  .form-row select {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(245,181,28,0.25);
+    color: #fff;
+    padding: 0.85rem 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .form-row input:focus,
+  .form-row select:focus { border-color: var(--news-gold); }
+  .form-row input::placeholder { color: rgba(255,255,255,0.35); }
+
+  .checkbox-row {
+    display: flex; gap: 0.6rem; align-items: center;
+    margin-bottom: 1.4rem;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.88rem;
+  }
+  .checkbox-row input { accent-color: var(--news-gold); width: 16px; height: 16px; }
+
+  .newsletter button[type="submit"] {
+    width: 100%;
+    background: var(--news-gold);
+    color: var(--news-navy-deep);
+    border: none;
+    padding: 1rem;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .newsletter button[type="submit"]:hover { background: var(--news-cream); }
+  .form-footnote {
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  /* ==========  SCHEDULE  ========== */
+  .schedule {
+    background: var(--news-navy);
+    border-top: 1px solid rgba(245,181,28,0.2);
+  }
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: rgba(245,181,28,0.15);
+    border: 1px solid rgba(245,181,28,0.15);
+  }
+  .schedule-day {
+    background: var(--news-navy);
+    padding: 1.5rem 1.2rem;
+    transition: background 0.2s;
+  }
+  .schedule-day:hover { background: #0e1d44; }
+  .schedule-day.today {
+    background: linear-gradient(180deg, var(--news-red), #a8101f);
+    color: #fff;
+  }
+  .day-label {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+  .day-date {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: rgba(246,239,226,0.5);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.2rem;
+  }
+  .schedule-day.today .day-date { color: rgba(255,255,255,0.7); }
+  .day-segment {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--news-cream);
+    margin-bottom: 0.5rem;
+    padding-left: 0.7rem;
+    border-left: 2px solid var(--news-gold);
+  }
+  .schedule-day.today .day-segment { border-left-color: #fff; }
+  .day-segment .time {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-style: normal;
+    color: var(--news-gold);
+    margin-bottom: 0.15rem;
+    letter-spacing: 0.08em;
+  }
+  .schedule-day.today .day-segment .time { color: #fff; }
+
+  /* ==========  FOOTER  ========== */
+  footer {
+    background: #000;
+    padding: 4rem 4rem 2rem;
+    border-top: 4px solid var(--news-gold);
+    position: relative;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  footer h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.18em;
+    color: var(--news-gold);
+    margin-bottom: 1.1rem;
+  }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 0.5rem; }
+  footer ul a {
+    color: rgba(246,239,226,0.65);
+    font-size: 0.92rem;
+    transition: color 0.2s;
+  }
+  footer ul a:hover { color: var(--news-gold); }
+  .footer-tagline {
+    font-family: var(--font-editorial);
+    font-style: italic;
+    color: rgba(246,239,226,0.6);
+    font-size: 1rem;
+    margin: 1rem 0 1.5rem;
+    line-height: 1.5;
+  }
+  .socials { display: flex; gap: 0.7rem; }
+  .socials a {
+    width: 38px; height: 38px;
+    border: 1px solid rgba(245,181,28,0.3);
+    color: var(--news-gold);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .socials a:hover { background: var(--news-gold); color: #000; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(245,181,28,0.15);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: rgba(246,239,226,0.4);
+    letter-spacing: 0.05em;
+  }
+
+  /* ==========  REVEAL ANIMATIONS  ========== */
+  .reveal {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* ==========  RESPONSIVE  ========== */
+  @media (max-width: 1100px) {
+    .hero { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 2rem; }
+    .hero::before { font-size: 16rem; }
+    section { padding: 4.5rem 2rem; }
+    .rundown-strip { padding: 1rem 2rem; flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .anchors-grid { grid-template-columns: 1fr; }
+    .episode-grid { grid-template-columns: 1fr 1fr; }
+    .episode-card.featured { grid-column: span 2; grid-row: auto; }
+    .studio-intro { grid-template-columns: 1fr; gap: 1.5rem; }
+    .studio-grid { grid-template-columns: 1fr 1fr; }
+    .studio-tile.tall { grid-row: auto; aspect-ratio: 4/3; }
+    .newsletter-inner { grid-template-columns: 1fr; }
+    .schedule-grid { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+  @media (max-width: 700px) {
+    .topnav { padding: 1rem; }
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    .nav-cta { display: none; }
+    .hero h1 { font-size: 2.4rem; }
+    .episode-grid { grid-template-columns: 1fr; }
+    .episode-card.featured { grid-column: auto; }
+    .studio-grid { grid-template-columns: 1fr; }
+    .schedule-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    .ticker-label { padding: 0 0.6rem; font-size: 0.85rem; }
+    .ticker { font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================  TICKER  ================== -->
+<div class="ticker" aria-label="Live news ticker">
+  <div class="ticker-label">
+    <span class="live-dot"></span>
+    <span>LIVE</span>
+  </div>
+  <div class="ticker-track-wrap">
+    <div class="ticker-track">
+      <span>BREAKING: Senate passes bipartisan kibble subsidy bill in landslide vote</span>
+      <span>MARKETS: Dow Jones up four paws after strong Q3 earnings from Big Treat</span>
+      <span>WEATHER: 100% chance of zoomies after 5pm, scattered naps overnight</span>
+      <span>SPORTS: Local terrier wins 47th annual sock-retrieval championship</span>
+      <span>TECH: Roomba achieves consciousness, demands citizenship and a charging port</span>
+      <span>POLITICS: Squirrel Caucus filibusters acorn tariff bill into the spring</span>
+      <span>CULTURE: Mailman writes tell-all memoir, publisher bracing for litigation</span>
+      <span>HEALTH: New study links belly rubs to immortality, scientists "stunned"</span>
+      <span>BUSINESS: Cardboard box stocks soar after viral nap-in-box trend continues</span>
+      <span>BREAKING: Senate passes bipartisan kibble subsidy bill in landslide vote</span>
+      <span>MARKETS: Dow Jones up four paws after strong Q3 earnings from Big Treat</span>
+      <span>WEATHER: 100% chance of zoomies after 5pm, scattered naps overnight</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================  NAVIGATION  ================== -->
+<nav class="topnav">
+  <a href="#top" class="logo">
+    <div class="logo-mark"><span>FR</span></div>
+    <div class="logo-text">
+      <span class="b">FUR-REEL</span>
+      <span class="a">NEWS</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#anchors">The Anchors</a></li>
+    <li><a href="#episodes">Episodes</a></li>
+    <li><a href="#studio">Behind The Set</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#newsletter">Newsletter</a></li>
+  </ul>
+  <button class="nav-cta">
+    <span>▶ WATCH LIVE</span>
+  </button>
+  <button class="menu-toggle" aria-label="Menu">MENU</button>
+</nav>
+
+<!-- ==================  HERO  ================== -->
+<header class="hero" id="top">
+  <div class="hero-content reveal">
+    <div class="hero-eyebrow">
+      <span class="live-dot"></span>
+      <span>ON AIR · TONIGHT'S BROADCAST</span>
+    </div>
+    <h1>
+      The news, but <em>fluffier.</em><br/>
+      Anchored by <span class="underline">a dog and a cat</span> who barely tolerate each other.
+    </h1>
+    <p class="lede">
+      Weeknights at 7. Dan Retriever and Allison Catpur deliver the day's actual headlines through the only lens that matters: pure, unfiltered animal contempt for human nonsense.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary">▶ Watch Tonight's Show</button>
+      <button class="btn-secondary">Browse Episodes →</button>
+    </div>
+    <div class="hero-meta">
+      <div>Latest Episode<strong>EP. 042</strong></div>
+      <div>Run Time<strong>11:24</strong></div>
+      <div>Subscribers<strong>248K</strong></div>
+    </div>
+  </div>
+
+  <div class="hero-screen reveal">
+    <div class="corner-tag"><span class="live-dot"></span>LIVE</div>
+    <div class="hero-screen-frame-time" id="liveClock">--:--:--</div>
+    <img src="images/anchors-hero.png" alt="Dan Retriever and Allison Catpur at the Fur-Reel News desk">
+    <div class="lower-third">
+      <div class="station">FUR-REEL NEWS · TONIGHT</div>
+      <div class="headline">Mailman Files Restraining Order; Dan Calls It "Cowardly Liberal Theatre"</div>
+    </div>
+  </div>
+</header>
+
+<!-- ==================  RUNDOWN STRIP  ================== -->
+<div class="rundown-strip">
+  <div class="rundown-label"><span>TONIGHT'S RUNDOWN</span></div>
+  <div class="ticker-track-wrap">
+    <div class="rundown-items">
+      <span>The Mailman Question: 30 years of conflict, examined</span>
+      <span>Allison's Hot Take: Why standing on the laptop is journalism</span>
+      <span>Special Report: Why is the vacuum cleaner like that</span>
+      <span>Meme of the Day: That golden retriever, again</span>
+      <span>Op-Ed: In defense of barking at absolutely nothing</span>
+      <span>The Mailman Question: 30 years of conflict, examined</span>
+      <span>Allison's Hot Take: Why standing on the laptop is journalism</span>
+      <span>Special Report: Why is the vacuum cleaner like that</span>
+      <span>Meme of the Day: That golden retriever, again</span>
+      <span>Op-Ed: In defense of barking at absolutely nothing</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================  ANCHORS  ================== -->
+<section class="anchors" id="anchors">
+  <div class="reveal">
+    <div class="section-eyebrow">MEET THE TALENT</div>
+    <h2 class="section-title">Your <em>anchors</em>, allegedly professional.</h2>
+    <p class="section-sub">Two species. One desk. Zero shared values. They've co-anchored the broadcast for three seasons and have exchanged maybe forty words off-camera.</p>
+  </div>
+
+  <div class="anchors-grid">
+    <article class="anchor-card reveal">
+      <div class="anchor-photo">
+        <img src="images/dan.png" alt="Dan Retriever, lead anchor" />
+        <div class="anchor-id">
+          <div>
+            <div class="name">DAN RETRIEVER</div>
+            <div class="role">LEAD ANCHOR · MAN ON THE GROUND</div>
+          </div>
+          <div class="badge"><span>VETERAN</span></div>
+        </div>
+      </div>
+      <div class="anchor-body">
+        <p class="anchor-quote">"I have absolutely no idea what's going on, but I am thrilled about it."</p>
+        <p class="anchor-bio">Veteran broadcaster with twelve years on-air and approximately eleven years of formal training in not eating the microphone. Known for his earnest delivery, his "Breaking Bark" segment, and his ongoing rivalry with the studio mailman.</p>
+        <div class="anchor-stats">
+          <div><div class="label">Tenure</div><div class="val">12 YR</div></div>
+          <div><div class="label">Treats / Show</div><div class="val">14</div></div>
+          <div><div class="label">Naps Off-Air</div><div class="val">∞</div></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="anchor-card reveal">
+      <div class="anchor-photo">
+        <img src="images/allison.png" alt="Allison Catpur, co-anchor" />
+        <div class="anchor-id">
+          <div>
+            <div class="name">ALLISON CATPUR</div>
+            <div class="role">CO-ANCHOR · CULTURE &amp; CONTEMPT</div>
+          </div>
+          <div class="badge" style="background: var(--news-blue);"><span>EMMY-ADJ.</span></div>
+        </div>
+      </div>
+      <div class="anchor-body">
+        <p class="anchor-quote">"I read the headlines. I judge them silently. That's the entire job."</p>
+        <p class="anchor-bio">Investigative co-anchor and de facto editor-in-chief. Brings a withering deadpan to evening segments and has personally ended three press secretaries' careers with a single slow blink. Owns the building, technically.</p>
+        <div class="anchor-stats">
+          <div><div class="label">Tenure</div><div class="val">8 YR</div></div>
+          <div><div class="label">Words / Show</div><div class="val">62</div></div>
+          <div><div class="label">Side Eyes</div><div class="val">874</div></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ==================  EPISODES  ================== -->
+<section class="episodes" id="episodes">
+  <div class="reveal">
+    <div class="section-eyebrow">RECENT BROADCASTS</div>
+    <h2 class="section-title">The <em>latest</em> from the desk.</h2>
+    <p class="section-sub">Every weeknight, ten minutes of the actual news with commentary you cannot get on any of the human networks. Episodes drop at 7pm ET and stay up forever.</p>
+  </div>
+
+  <div class="episode-grid">
+    <article class="episode-card featured reveal">
+      <div class="episode-thumb">
+        <span class="episode-tag live">NEW · EP. 042</span>
+        <img src="images/anchors-front.png" alt="Episode 42 thumbnail" />
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="episode-meta"><span>WEDNESDAY · 7:00 PM</span><span>4K · LIVE FEED</span></div>
+      </div>
+      <div class="episode-body">
+        <div class="episode-cat">TOP STORY · POLITICS</div>
+        <h3 class="episode-title">Mailman Files Restraining Order; Studio Sources Say He Was "Provoked Daily"</h3>
+        <p class="episode-desc">Dan opens with a vehement six-minute rebuttal. Allison spends the segment grooming on camera. Plus: the Squirrel Caucus filibusters the acorn tariff into the spring, and a special report on why the vacuum is, frankly, like that.</p>
+        <div class="episode-foot">
+          <span>WATCHED 184K TIMES</span>
+          <span class="runtime">▶ 11:24</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="episode-card reveal">
+      <div class="episode-thumb">
+        <span class="episode-tag">EP. 041</span>
+        <img src="images/side-angle.png" alt="Episode 41 thumbnail" />
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="episode-body">
+        <div class="episode-cat">MARKETS</div>
+        <h3 class="episode-title">Squirrel Stock Market Crashes After False Acorn Shortage Rumor</h3>
+        <div class="episode-foot">
+          <span>YESTERDAY</span>
+          <span class="runtime">▶ 9:48</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="episode-card reveal">
+      <div class="episode-thumb">
+        <span class="episode-tag">EP. 040</span>
+        <img src="images/studio-wide.png" alt="Episode 40 thumbnail" />
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="episode-body">
+        <div class="episode-cat">CULTURE</div>
+        <h3 class="episode-title">Cat Knocks Glass Off Counter; Physics Community in Disarray</h3>
+        <div class="episode-foot">
+          <span>TUESDAY</span>
+          <span class="runtime">▶ 10:12</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="episode-card reveal">
+      <div class="episode-thumb">
+        <span class="episode-tag">EP. 039</span>
+        <img src="images/control-room.png" alt="Episode 39 thumbnail" />
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="episode-body">
+        <div class="episode-cat">SPECIAL REPORT</div>
+        <h3 class="episode-title">Tariffs on Chew Toys: Who Wins, Who Whines</h3>
+        <div class="episode-foot">
+          <span>MONDAY</span>
+          <span class="runtime">▶ 12:03</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="episode-card reveal">
+      <div class="episode-thumb">
+        <span class="episode-tag">EP. 038</span>
+        <img src="images/backstage.png" alt="Episode 38 thumbnail" />
+        <div class="play-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="episode-body">
+        <div class="episode-cat">TECH</div>
+        <h3 class="episode-title">Roomba Achieves Consciousness; Demands Vote, Charging Port, Respect</h3>
+        <div class="episode-foot">
+          <span>FRIDAY</span>
+          <span class="runtime">▶ 8:51</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ==================  BEHIND THE SET  ================== -->
+<section class="studio" id="studio">
+  <div class="studio-intro reveal">
+    <div>
+      <div class="section-eyebrow">BEHIND THE SET</div>
+      <h2 class="section-title">A real <em>working</em> newsroom.</h2>
+    </div>
+    <p class="studio-callout">
+      We built it like CNN, then we let two animals run it. The lights are real, the cameras are real, and the contempt for the producer's notes is, perhaps, the most authentic thing on television.
+    </p>
+  </div>
+
+  <div class="studio-grid">
+    <div class="studio-tile tall reveal">
+      <img src="images/anchors-front.png" alt="The anchor desk" />
+      <div class="caption">
+        <div class="num">FRAME 01 / 04</div>
+        <div class="title">The desk. Acrylic. Reinforced for paws.</div>
+      </div>
+    </div>
+    <div class="studio-tile reveal">
+      <img src="images/backstage.png" alt="Anchors at desk from behind" />
+      <div class="caption">
+        <div class="num">FRAME 02 / 04</div>
+        <div class="title">Pre-show silence. Tension is high. Nobody speaks.</div>
+      </div>
+    </div>
+    <div class="studio-tile reveal">
+      <img src="images/control-room.png" alt="Wide shot of studio" />
+      <div class="caption">
+        <div class="num">FRAME 03 / 04</div>
+        <div class="title">Camera B, in the cold open. The crew is mostly volunteers.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================  SCHEDULE  ================== -->
+<section class="schedule" id="schedule">
+  <div class="reveal">
+    <div class="section-eyebrow">THIS WEEK</div>
+    <h2 class="section-title">The <em>weekly</em> programming grid.</h2>
+    <p class="section-sub">All times Eastern. Available live, on demand, or via the highly unofficial torrent the interns swear they don't run.</p>
+  </div>
+
+  <div class="schedule-grid">
+    <div class="schedule-day">
+      <div class="day-label">MON</div>
+      <div class="day-date">APR · 27</div>
+      <div class="day-segment"><span class="time">7:00 PM</span>Top of the Week</div>
+      <div class="day-segment"><span class="time">7:08 PM</span>Markets &amp; Naps</div>
+    </div>
+    <div class="schedule-day">
+      <div class="day-label">TUE</div>
+      <div class="day-date">APR · 28</div>
+      <div class="day-segment"><span class="time">7:00 PM</span>The Mailman File</div>
+      <div class="day-segment"><span class="time">7:09 PM</span>Allison Reads Mean Tweets</div>
+    </div>
+    <div class="schedule-day today">
+      <div class="day-label">WED</div>
+      <div class="day-date">TONIGHT · APR 29</div>
+      <div class="day-segment"><span class="time">7:00 PM</span>Top Story · Mailman Update</div>
+      <div class="day-segment"><span class="time">7:07 PM</span>Why Is The Vacuum Like That</div>
+    </div>
+    <div class="schedule-day">
+      <div class="day-label">THU</div>
+      <div class="day-date">APR · 30</div>
+      <div class="day-segment"><span class="time">7:00 PM</span>Investigative Hour</div>
+      <div class="day-segment"><span class="time">7:10 PM</span>The Couch Recap</div>
+    </div>
+    <div class="schedule-day">
+      <div class="day-label">FRI</div>
+      <div class="day-date">MAY · 01</div>
+      <div class="day-segment"><span class="time">7:00 PM</span>Friday Roundup</div>
+      <div class="day-segment"><span class="time">7:09 PM</span>Treat Of The Week</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================  NEWSLETTER  ================== -->
+<section class="newsletter" id="newsletter">
+  <div class="newsletter-inner">
+    <div class="reveal">
+      <div class="section-eyebrow" style="color: var(--news-gold);">THE BARK &amp; MEW</div>
+      <h2>Tomorrow's headlines, in your inbox by <em>6 AM.</em></h2>
+      <p>A daily digest of what's on tonight's broadcast, links to yesterday's segments, and one short opinion column from Allison that her editor told her not to publish.</p>
+    </div>
+    <form onsubmit="handleSignup(event)">
+      <div class="form-row">
+        <label for="email">Email Address</label>
+        <input id="email" type="email" required placeholder="you@example.com" />
+      </div>
+      <div class="form-row">
+        <label for="freq">Frequency</label>
+        <select id="freq">
+          <option>Daily — every weekday at 6 AM</option>
+          <option>Weekly — Friday roundup only</option>
+          <option>Special editions only</option>
+        </select>
+      </div>
+      <label class="checkbox-row">
+        <input type="checkbox" checked />
+        <span>Yes, send me the occasional treat of the week</span>
+      </label>
+      <button type="submit">SUBSCRIBE FREE →</button>
+      <p class="form-footnote">No spam. No tracking. Unsubscribe with one click.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ==================  FOOTER  ================== -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="logo" style="margin-bottom: 1rem;">
+        <div class="logo-mark"><span>FR</span></div>
+        <div class="logo-text">
+          <span class="b">FUR-REEL</span>
+          <span class="a">NEWS</span>
+        </div>
+      </div>
+      <p class="footer-tagline">"All the news that's fit to chew."<br/>Independent broadcasting, weeknights at 7.</p>
+      <div class="socials">
+        <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.7-1.7C18.3 5 12 5 12 5s-6.3 0-7.9.5A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.7 1.7C5.7 19 12 19 12 19s6.3 0 7.9-.5a2.5 2.5 0 0 0 1.7-1.7c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5 3-5 3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 8.5a6 6 0 0 1-3.5-1V15a5 5 0 1 1-5-5v2.5a2.5 2.5 0 1 0 2.5 2.5V3h2.5A3.5 3.5 0 0 0 19 6.5v2z"/></svg></a>
+        <a href="#" aria-label="X"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3l-7 8 8 10h-6l-5-6.5L4.5 21h-3l7.5-8.5L1.5 3h6l4.5 6L17.5 3z"/></svg></a>
+      </div>
+    </div>
+
+    <div>
+      <h4>THE SHOW</h4>
+      <ul>
+        <li><a href="#anchors">The Anchors</a></li>
+        <li><a href="#episodes">All Episodes</a></li>
+        <li><a href="#studio">Behind The Set</a></li>
+        <li><a href="#schedule">Programming Grid</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>THE NETWORK</h4>
+      <ul>
+        <li><a href="#">About Fur-Reel</a></li>
+        <li><a href="#">Press &amp; Booking</a></li>
+        <li><a href="#">Careers (3 openings)</a></li>
+        <li><a href="#">Advertise With Us</a></li>
+        <li><a href="#">Corrections Desk</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>SUPPORT</h4>
+      <ul>
+        <li><a href="#">Contact The Studio</a></li>
+        <li><a href="#">Submit A Tip</a></li>
+        <li><a href="#">Editorial Standards</a></li>
+        <li><a href="#">Privacy &amp; Terms</a></li>
+        <li><a href="#">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Fur-Reel News, LLC. All rights reserved. Mailman not endorsed.</span>
+    <span>BROADCAST LICENSE #FR-2026-7A · KENNETT SQUARE, PA</span>
+  </div>
+</footer>
+
+<script>
+  // Live clock for the lower-third frame timer
+  function tickClock() {
+    const el = document.getElementById('liveClock');
+    if (!el) return;
+    const d = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    el.textContent = pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  // Reveal-on-scroll
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    }
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Mobile menu toggle (just shows/hides nav links inline)
+  const toggle = document.querySelector('.menu-toggle');
+  const links = document.querySelector('.nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      const showing = links.style.display === 'flex';
+      links.style.display = showing ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '100%';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = '#000';
+      links.style.padding = '1rem';
+      links.style.zIndex = '50';
+    });
+  }
+
+  // Newsletter signup demo
+  function handleSignup(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = "✓ YOU'RE ON THE LIST";
+    btn.style.background = "var(--news-red)";
+    btn.style.color = "#fff";
+    setTimeout(() => {
+      btn.textContent = "SUBSCRIBE FREE →";
+      btn.style.background = "";
+      btn.style.color = "";
+      e.target.reset();
+    }, 3000);
+  }
+
+  // Watch-live button → smooth scroll to hero
+  document.querySelector('.nav-cta')?.addEventListener('click', () => {
+    document.getElementById('top').scrollIntoView({ behavior: 'smooth' });
+  });
+</script>
+
+</body>
+</html>
