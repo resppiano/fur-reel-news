@@ -1,2 +1,10 @@
+# macOS junk
 .DS_Store
+._*
+
+# Editor swap files
+*.swp
+*.swo
+
+# OS thumbs
 Thumbs.db
